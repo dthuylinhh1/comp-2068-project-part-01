@@ -87,5 +87,9 @@ app.use('/', routes);
 /*
   Step 8: Start the server
 */
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+// const PORT = process.env.PORT || 3000;
+// app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+
+app.listen(process.env.PORT || 3000, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
