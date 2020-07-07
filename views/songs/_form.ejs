@@ -13,7 +13,7 @@
         <select name="artist" class="form-control">
             <option>Select an Artist</option>
             <% for (let artist of artists) { %>
-            <option <%= (artist === formData.artist) && 'selected' %> value="<%= artist.name %>"><%= artist.name %></option>
+                <option <%= (artist === formData.artist) && 'selected' %> value="<%= artist.id %>"><%= artist.name %></option>
             <% } %>
         </select>
     </div>

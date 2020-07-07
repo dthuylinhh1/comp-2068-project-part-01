@@ -23,10 +23,5 @@ const SongSchema = new mongoose.Schema({
   timestamps: true
 });
 
-SongSchema.virtual('artistname')
-.get(function () {
-  return `${this.name} `;
-});
-
 // export our mongoose model
 module.exports = mongoose.model('Song', SongSchema);

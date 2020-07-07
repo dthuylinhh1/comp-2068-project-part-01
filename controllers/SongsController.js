@@ -22,12 +22,13 @@ exports.index = async (req, res) =>{
 
 exports.show = async (req, res) =>{
     try {
-        const song = await Song.findById(req.params.id).populate('user');
         
+        const song = await Song.findById(req.params.id).populate('user');
+        console.log(mongoose.Schema.Types.ObjectId(song.artist));
         res.render(`${viewPath}/show`, {
             pageTitle: song.name,
-            song: song
-           
+            song: song,
+            
         });
     }catch (error){
         req.flash('danger', `There was an error displaying this song: ${error}`);
@@ -48,7 +49,7 @@ exports.create = async (req, res) => {
     try{
         const {user: email} = req.session.passport;
         const user = await User.findOne({email: email});
-        const song = await Song.create({user: user._id ,...req.body});
+        const song = await Song.create({user: user._id,...req.body});
         req.flash('success', 'Song created successfully');
         res.redirect(`/songs/${song.id}`);
     }catch(error){
@@ -59,12 +60,15 @@ exports.create = async (req, res) => {
 
 };
 
+
 exports.edit = async (req, res) =>{
+    const artists = await Artist.find({});
     try{
         const song = await Song.findById(req.params.id);
         res.render(`${viewPath}/edit`, {
             pageTitle: song.name,
-            formData: song
+            formData: song,
+            artists: artists
         });
     }catch(error){
         req.flash('danger', `There was an error accessing this song: ${error} `);

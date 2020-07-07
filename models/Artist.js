@@ -39,7 +39,7 @@ const ArtistSchema = new mongoose.Schema({
 
 ArtistSchema.virtual('artistname')
 .get(function () {
-  return `${this.name} `;
+  return `${this.name}`;
 });
 
 // export our mongoose model
