@@ -1,0 +1,27 @@
+<!--
+  Step 1: This is your descretion how you would like to display data,
+  but you must list display only one document based on the passed ID.
+-->
+<%- include ('../partials/header') %>
+<div class="container my-5">
+    <header>
+        <h1>
+            <%= artist.name %>
+            <a href="/artists/<%= artist.id %>/edit">
+                <i class="fa fa-edit"></i>
+            </a>
+        </h1>
+        <br>
+        <small>
+            <%= (artist.updatedAt.toLocaleString("en-CA")) %>
+        </small>
+        <p><strong>By: <%= artist.user.fullname %></strong></p>
+    </header>
+    <hr>
+    <div class="content">
+      <strong><%= artist.name %></strong> was born in <%= (artist.dateOfBirth.toLocaleString("en-CA")) %> and is a <%= artist.gender %>.
+    </div>
+</div> 
+
+
+<%- include ('../partials/footer') %>

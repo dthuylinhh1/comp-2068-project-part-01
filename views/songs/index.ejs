@@ -1,0 +1,52 @@
+<!--
+  Step 1: This is your descretion how you would like to display data,
+  but you must list all the documents in your resource collection.
+-->
+<%- include ('../partials/header') %>
+<div class="container my-5">
+    <header>
+        <h1>List of Songs</h1>
+        
+    </header>
+    <hr>
+    <div class="content">
+        <% for (let song of songs){ %> 
+            <div class="card border-info my-3">
+                <div class="card-header clearfix">
+                    <div class=" float-left">
+                        <h5 class="card-title"> <%= song.name %> </h5>
+                        <% if (typeof song.user !== 'undefined') { %>
+                            <small>~ added by: <%= song.user.fullname %></small>
+                        <% } %>
+                    </div>
+                    <div class="float-right">
+                        <small><%= song.updatedAt.toLocaleString("en-CA") %></small>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                      <strong><%= song.name %></strong> was written in <%= (song.dateOfPublished.toLocaleString("en-CA")) %>.   
+                    </p>
+                    
+                </div>
+                <% if (authorized && (typeof song.user === 'undefined' || song.user.email === email)) { %>
+                  <div class="card-footer">
+                    <a href="/songs/<%= song.id %>/edit">
+                      <i class="fa fa-edit"></i>
+                    </a>
+                    &nbsp;/&nbsp;
+                    <form class="form-inline" action="/songs/delete" method="post" onsubmit="return confirm('Are you sure you want to delete this song?');">
+                      <input type="hidden" value="<%= song.id %>" name="id">
+                      <button class="delete" type="submit">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </form>
+                  </div>
+                <% } %>
+            </div> 
+        <% } %>
+    </div>
+</div> 
+
+
+<%- include ('../partials/footer') %>

@@ -33,3 +33,25 @@ header:not(.home-cta), .alert {
   text-align: center;
   z-index: 1;
 }
+
+.form-inline {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.form-inline > .delete {
+  border: none;
+  background: none;
+  color: #007bff;
+  margin: 0;
+  padding: 0;
+}
+
+.form-inline > .delete:hover {
+  color: #0056b3;
+}

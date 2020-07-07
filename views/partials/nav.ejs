@@ -11,9 +11,37 @@
         <a class="nav-link" href="/">Home</a>
       </li>
 
-      <% if (authorized) { %>
+      
+      <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" id="artistsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Artists
+        </a>
         
-      <% } %>
+        <div class="dropdown-menu" aria-labelledby="artistsDropdown">
+          <a href="/artists" class="dropdown-item">List of Artists</a>
+          <% if (authorized) { %>
+          <div class="dropdown-divider"></div>
+          <a href="/artists/new" class="dropdown-item">New Artist</a>
+          <% } %>
+        </div>
+        
+      </li>
+
+      <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" id="songsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Songs
+        </a>
+        
+        <div class="dropdown-menu" aria-labelledby="songsDropdown">
+          <a href="/songs" class="dropdown-item">List of Songs</a>
+          <% if (authorized) { %>
+          <div class="dropdown-divider"></div>
+          <a href="/songs/new" class="dropdown-item">New Song</a>
+          <% } %>
+        </div>
+        
+      </li>
+      
     </ul>
 
     <ul class="navbar-nav">

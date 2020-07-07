@@ -1,0 +1,32 @@
+<!--
+  Step 1: The form must be sharable between the new and edit views.
+-->
+<form action="<%= (typeof actionPath === 'undefined') ? '/artists' : actionPath %>", method="POST">
+  <% if (typeof actionPath !== 'undefined') { %>
+    <input type="hidden" name="id" value="<%= formData.id %>">
+  <% } %>
+
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text"  name = "name" class="form-control" value="<%= formData.name %>">
+  </div>  
+
+  <div class="form-group">
+    <label for="gender">Gender</label>
+    <select name="gender" class="form-control">
+        <option value="MALE">Male</option>
+        <option <%= formData.status && formData.status === 'FEMALE' ? 'selected' : null %> value="FEMALE">Female</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="dateOfBirth">Date of Birth</label>
+    <input type="datetime-local" name="dateOfBirth" class="form-control" value="" 
+    <%= (formData.dateOfBirth) %>
+    />
+  </div>
+
+  <div class="form-group">
+    <button class="btn btn-dark">Submit</button>
+  </div>
+</form>
