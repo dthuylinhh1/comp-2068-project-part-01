@@ -1,19 +1,4 @@
-// INSTRUCTIONS:
-/*
-  Create a new resource controller that uses the
-  User as an associative collection (examples):
-  - User -> Books
-  - User -> Reservation
 
-  The resource controller must contain the 7 resource actions:
-  - index
-  - show
-  - new
-  - create
-  - edit
-  - update
-  - delete
-*/
 const viewPath = ('artists');
 
 const Artist = require('../models/Artist');
@@ -26,26 +11,21 @@ exports.index = async (req, res) =>{
         .populate('user')
         .sort({updatedAt: 'desc'});
         
-        res.render(`${viewPath}/index`,{
-            pageTitle: 'List of Artists',
-            artists: artists
-        });
+        res.status(200).json(artists);
+    
     }catch (error){
-        req.flash('danger', `There was an error displaying a list: ${error}`);
-        res.redirect('/');
+        res.status(400).json({
+            message: ' There was an error fetching the artists', error
+        });
     }
 };
 
 exports.show = async (req, res) =>{
     try {
         const artist = await Artist.findById(req.params.id).populate('user');
-        res.render(`${viewPath}/show`, {
-            pageTitle: artist.name,
-            artist: artist
-        });
+        res.status(200).json(artist);
     }catch (error){
-        req.flash('danger', `There was an error displaying this artist: ${error}`);
-        res.redirect('/artists');
+        res.status(400).json({message:"There was an error editing this artist!"});
     }   
 };
 
@@ -61,12 +41,11 @@ exports.create = async (req, res) => {
         const {user: email} = req.session.passport;
         const user = await User.findOne({email: email});
         const artist = await Artist.create({user: user._id ,...req.body});
-        req.flash('success', 'Artist created successfully');
-        res.redirect(`/artists/${artist.id}`);
+        res.status(200).json(artist);
     }catch(error){
-        req.flash('danger', `There was an error creating this artist: ${error} `);
-        req.session.formData = req.body;
-        res.redirect('/artists/new');
+        res.status(400).json({
+            message: "There was an error creating this artist", error
+        });
     }
 
 };
@@ -110,10 +89,8 @@ exports.update = async (req, res) => {
   exports.delete = async (req, res) => {
     try {
       await Artist.deleteOne({_id: req.body.id});
-      req.flash('success', 'The artist was deleted successfully');
-      res.redirect(`/artists`);
+      res.status(200).json({message:"Yay"});
     } catch (error) {
-      req.flash('danger', `There was an error deleting this artist: ${error}`);
-      res.redirect(`/artists`);
+        res.status(400).json({message:"There was an error deleting this artist"});
     }
   };

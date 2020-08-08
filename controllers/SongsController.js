@@ -8,31 +8,25 @@ exports.index = async (req, res) =>{
     try{
         const songs = await Song.find()
         .populate('user')
+        .populate('artist')
         .sort({updatedAt: 'desc'});
         
-        res.render(`${viewPath}/index`,{
-            pageTitle: 'List of Songs',
-            songs: songs
-        });
+        
+        res.status(200).json(songs);
     }catch (error){
-        req.flash('danger', `There was an error displaying a list: ${error}`);
-        res.redirect('/');
-    }
+        res.status(400).json({
+            message: ' There was an error fetching the songs', error
+    });
 };
 
 exports.show = async (req, res) =>{
     try {
         
         const song = await Song.findById(req.params.id).populate('user');
-        console.log(mongoose.Schema.Types.ObjectId(song.artist));
-        res.render(`${viewPath}/show`, {
-            pageTitle: song.name,
-            song: song,
-            
-        });
+        
+        res.status(200).json(song);
     }catch (error){
-        req.flash('danger', `There was an error displaying this song: ${error}`);
-        res.redirect('/songs');
+        res.status(400).json({message:"There was an error editing this artist!"});
     }   
 };
 
@@ -50,12 +44,11 @@ exports.create = async (req, res) => {
         const {user: email} = req.session.passport;
         const user = await User.findOne({email: email});
         const song = await Song.create({user: user._id,...req.body});
-        req.flash('success', 'Song created successfully');
-        res.redirect(`/songs/${song.id}`);
+        res.status(200).json(song);
     }catch(error){
-        req.flash('danger', `There was an error creating this song: ${error} `);
-        req.session.formData = req.body;
-        res.redirect('/songs/new');
+        res.status(400).json({
+            message: "There was an error creating this song", error
+        });
     }
 
 };
@@ -102,10 +95,9 @@ exports.update = async (req, res) => {
   exports.delete = async (req, res) => {
     try {
       await Song.deleteOne({_id: req.body.id});
-      req.flash('success', 'The song was deleted successfully');
-      res.redirect(`/songs`);
+      res.status(200).json({message:"Yay"});
     } catch (error) {
-      req.flash('danger', `There was an error deleting this song: ${error}`);
-      res.redirect(`/songs`);
+        res.status(400).json({message:"There was an error deleting this song"});
     }
   };
+}

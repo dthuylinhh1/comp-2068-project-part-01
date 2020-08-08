@@ -25,7 +25,11 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">
-                      <strong><%= song.name %></strong> was written in <%= (song.dateOfPublished.toLocaleString("en-CA")) %> by <%= song.artist %>.   
+                      <strong><%= song.name %></strong> was written in <%= (song.dateOfPublished.toLocaleString("en-CA")) %> 
+                      <!-- by 
+                      <% if (typeof song.artist !== 'undefined') { %>
+                        <small>~ <%= song.artist %></small>
+                      <% } %>.    -->
                     </p>
                     
                 </div>

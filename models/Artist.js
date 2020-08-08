@@ -34,13 +34,14 @@ const ArtistSchema = new mongoose.Schema({
     required: false
   }
 },{
-  timestamps: true
+  timestamps: true,
+  toJSON: {
+    getters: true
+  }
 });
 
-ArtistSchema.virtual('artistname')
-.get(function () {
-  return `${this.name}`;
-});
+
+
 
 // export our mongoose model
 module.exports = mongoose.model('Artist', ArtistSchema);

@@ -20,7 +20,10 @@ const SongSchema = new mongoose.Schema({
     required: true,
   }
 },{
-  timestamps: true
+  timestamps: true,
+  toJSON: {
+    getters: true
+  }
 });
 
 // export our mongoose model
