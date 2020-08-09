@@ -1,5 +1,6 @@
-const { create } = require('../controllers/UsersController');
+const {new: _new, create} = require('../controllers/UsersController');
 
 module.exports = router => {
-  router.post('/register', create);
+  // Step 1: Setup the necessary routes for new and create
+  router.post('/users', create);
 };

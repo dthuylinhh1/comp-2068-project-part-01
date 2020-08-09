@@ -17,7 +17,7 @@ function Nav ({user}) {
             <Link to="/" className="nav-link">Home</Link>
           </li>
 
-          {/* Need the missing links to the tours and new tour */}
+          
           <li className="nav-item dropdown">
             <a href="/" type="button" className="nav-link dropdown-toggle" id="toursDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-labelledby="toursDropDown">Artists</a>
 

@@ -77,13 +77,13 @@ const New = function () {
                 onChange={handleInputChange}
                 defaultValue={inputs.gender || 'MALE'}
             >  
-                <option value="MALE">draft</option>
-                <option value="FEMALE">published</option>
+                <option value="MALE">MALE</option>
+                <option value="FEMALE">FEMALE</option>
             </Form.Control> 
         </Form.Group>
 
-          <Form.Group>
-            <Form.Label>Date Of Birth:</Form.Label>
+        <Form.Group>
+            <Form.Label>Date:</Form.Label>
             <Form.Control
               type="date"
               name="date"

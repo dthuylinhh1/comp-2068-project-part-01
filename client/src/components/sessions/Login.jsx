@@ -6,74 +6,80 @@ import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const Login = ({setUser}) => {
-    const [inputs, setInputs] = useState({
-        email: '',
-        password: ''
-    });
+  const [inputs, setInputs] = useState({
+    email: '',
+    password: ''
+  });
 
-    const [redirect, setRedirect] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
-    const handleSubmit = async event => {
-        event.preventDefault();
-        try{
-            const resp = await Axios.post('/authenticate', inputs);
+  const handleSubmit = async event => {
+    event.preventDefault();
 
-            if(resp.status === 200){
-                setUser(resp.data.user);
-                toast('You have log in successfully!', {
-                    type: toast.TYPE.SUCCESS
-                });
-                setRedirect(true);
-            } else {
-                toast('There was issue logging in please check your credentials', {
-                    type: toast.TYPE.ERROR
-                }); 
-            }
-        }catch(error){
-            toast('There was an issue logging in please check your credentials', {
-                type: toast.TYPE.ERROR
-            });
-        }
+    try {
+      const resp = await Axios.post('/api/authenticate', inputs);
+
+      if (resp.status === 200) {
+        setUser(resp.data.user);
+        //sessionStorage.setItem('user', JSON.stringify(resp.data.user));
+        toast('You have logged in successfully', {
+          type: toast.TYPE.SUCCESS
+        });
+        setRedirect(true);
+      } else {
+        toast("There was an issue logging you in. Please check your credentials.", {
+          type: toast.TYPE.ERROR
+        });
+      }
+    } catch (error) {
+      console.log(error)
+      toast("There was an issue logging you in. Please check your credentials.", {
+        type: toast.TYPE.ERROR
+      });
+    }
+  };
+
+  const handleInputChange = event => {
+    event.persist();
+
+    const {name, value} = event.target;
+
+    setInputs(inputs => ({
+      ...inputs,
+      [name]: value
+    }));
+  };
+
+  if (redirect) {
+    return (<Redirect to="/artists"/>);
+  }
+
+  return (
+    <Container className="my-5">
+      <header>
+        <h1>Login</h1>
+      </header>
+
+      <hr/>
+      
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <label htmlFor="email">Email:</label>
+          <Form.Control type="email" name="email" onChange={handleInputChange} value={inputs.email}/>
+        </Form.Group>
+
+        <Form.Group>
+          <label htmlFor="password">Password:</label>
+          <Form.Control type="password" name="password" onChange={handleInputChange} value={inputs.password}/>
+        </Form.Group>
+
+        <Form.Group>
+          <button className="btn btn-primary">Login</button>
+        </Form.Group>
+      </Form>
         
-    };
-
-    const handleInputChange = event => {
-        event.persist();
-
-        const {name, value} = event.target;
-
-        setInputs(inputs => ({...inputs, [name]: value}));
-        console.log(inputs);
-    };
-
-    if(redirect) return <Redirect to="/artists" />
-
-    return (
-        <Container className="my-5">
-            <header>
-                <h1>Login</h1>
-            </header>
-
-            <hr/>
-         
-            <Form onSubmit={handleSubmit}>
-                <Form.Group>
-                <label htmlFor="email">Email:</label>
-                <Form.Control type="email" name="email" onChange={handleInputChange} value={inputs.email}/>
-                </Form.Group>
-
-                <Form.Group>
-                <label htmlFor="password">Password:</label>
-                <Form.Control type="password" name="password" onChange={handleInputChange} value={inputs.password}/>
-                </Form.Group>
-
-                <Form.Group>
-                <button className="btn btn-primary">Login</button>
-                </Form.Group>
-            </Form>
-            
-        </Container>
-    );
+    </Container>
+  );
 };
 
 export default Login;

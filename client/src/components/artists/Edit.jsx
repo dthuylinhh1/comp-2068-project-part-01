@@ -43,6 +43,7 @@ const Edit = function (props) {
               });
           }
       }catch (error){
+          console.log(error);
           toast("There was an issue updating the artist",{
               type: toast.TYPE.ERROR
           });
@@ -88,8 +89,8 @@ const Edit = function (props) {
                 onChange={handleInputChange}
                 defaultValue={inputs.gender || 'MALE'}
             >  
-                <option value="MALE">draft</option>
-                <option value="FEMALE">published</option>
+                <option value="MALE">MALE</option>
+                <option value="FEMALE">FEMALE</option>
             </Form.Control> 
         </Form.Group>
 
@@ -97,7 +98,7 @@ const Edit = function (props) {
             <Form.Label>Date Of Birth:</Form.Label>
             <Form.Control
               type="date"
-              name="date"
+              name="dateOfBirth"
               onChange={handleInputChange}
               value={inputs.dateOfBirth}
             />

@@ -28,8 +28,20 @@ function Routes ({user, setUser}){
               user={user}
             />
           }/>
-          <Route exact path="/artists/new" component={NewArtist}/>
-          <Route exact path="/artists/edit" component={EditArtist}/>
+          <Route exact path="/artists/new" render={
+            renderProps => <NewArtist
+              {...renderProps}
+              user={user}
+            />
+          }/>
+          <Route exact path="/artists/edit" render={
+            renderProps => <EditArtist
+              {...renderProps}
+              user={user}
+            />
+          }/>
+          
+          
           {/* <Route exact path="/songs" render={
             renderProps => <Songs
               {...renderProps}
